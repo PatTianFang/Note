@@ -140,6 +140,8 @@ conda remove -n test --all
 ## 4-删除虚拟环境
 想要删除创建的虚拟环境，我们只要先选择想要的删除的虚拟环境，然后点击**Remove**就可以了
 
+# 
+
 
 
 #CMD #Anaconda #Conda #虚拟环境

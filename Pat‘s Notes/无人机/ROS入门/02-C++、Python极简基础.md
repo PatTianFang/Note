@@ -14,7 +14,7 @@
 
 先将编译器作为软件进行安装
 
-输入
+在终端输入
 
 ```Linux
 sudo apt-get install g++
@@ -30,6 +30,12 @@ sudo apt-get install python
 
 ![[Pasted image 20250329192837.png]]
 
+编译格式为
+
+```Linux
+g++ 编译的代码的文件名 -o 输出的可执行文件的名字
+```
+
 输入
 
 ```Linux
@@ -40,7 +46,31 @@ g++ c++_for.cpp -o c++_for
 
 ![[Pasted image 20250329193328.png]]
 
+按照运行文件的方式
 
+```Linux
+./编译完的文件名
+```
+
+输入
+
+```Linux
+./c++_for
+```
+
+![[Pasted image 20250329195535.png]]
+
+在桌面创建名为`python_for.python`的文件
+
+![[Pasted image 20250329194744.png]]
+
+输入
+
+```Linux
+python python_for.py
+```
+
+![[Pasted image 20250329195852.png]]
 
 #
 

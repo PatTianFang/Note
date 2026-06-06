@@ -2,6 +2,7 @@
 *
 !*/
 !.gitignore
+!README.md
 
 # Allow Markdown documents.
 !*.md
@@ -35,6 +36,19 @@
 .git/
 **/.git/
 **/.git
+
+# Ignore common generated and local files explicitly for clarity.
+__pycache__/
+node_modules/
+.venv/
+venv/
+.wrangler/
+.cache/
+build/
+dist/
+*.log
+*.tmp
+*.temp
 
 # Known local Git checkouts currently stored under notes.
 **/darknet/

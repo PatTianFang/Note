@@ -1,0 +1,41 @@
+# Ignore everything by default.
+*
+!*/
+!.gitignore
+
+# Allow Markdown documents.
+!*.md
+!**/*.md
+
+# Allow image assets used by notes.
+!*.png
+!**/*.png
+!*.jpg
+!**/*.jpg
+!*.jpeg
+!**/*.jpeg
+!*.gif
+!**/*.gif
+!*.webp
+!**/*.webp
+!*.svg
+!**/*.svg
+!*.bmp
+!**/*.bmp
+!*.tif
+!**/*.tif
+!*.tiff
+!**/*.tiff
+!*.avif
+!**/*.avif
+!*.ico
+!**/*.ico
+
+# Ignore nested Git metadata; Note should not track nested repositories.
+.git/
+**/.git/
+**/.git
+
+# Known local Git checkouts currently stored under notes.
+**/darknet/
+**/yolov5/

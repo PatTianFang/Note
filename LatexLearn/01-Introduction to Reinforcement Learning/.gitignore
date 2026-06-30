@@ -1,0 +1,28 @@
+# LaTeX build output
+/build/
+/main.pdf
+
+# LaTeX auxiliary files
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.xdv
+
+# LaTeX editor/runtime temporary files
+*.bak
+*.tmp
+*.swp
+*.synctex(busy)
+
+# OS/editor metadata
+.DS_Store
+Thumbs.db
+.vscode/

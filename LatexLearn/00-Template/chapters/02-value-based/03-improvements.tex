@@ -1,0 +1,12 @@
+\section{常见改进}
+
+\begin{itemize}
+  \item Double DQN：降低 $\max$ 操作带来的过估计。
+  \item Dueling DQN：将 $Q(s,a)$ 拆成状态价值和优势项。
+  \item Prioritized Replay：更频繁采样 TD 误差较大的样本。
+  \item NoisyNet：通过参数噪声增强探索。
+\end{itemize}
+
+\begin{warningbox}
+DQN 更适合离散动作空间。连续动作任务通常使用 DDPG、TD3、SAC 或 PPO 等方法。
+\end{warningbox}

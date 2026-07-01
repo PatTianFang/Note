@@ -1,0 +1,87 @@
+﻿\section{强化学习概览}
+
+\subsection{什么是强化学习}
+
+\indent 典型的强化学习过程如下：
+
+\input{figures/rl-agent-environment-loop.tex}
+
+\begin{definitionbox}[强化学习]
+A computational approach to learning whereby \textcolor{red}{an agent} tries
+to \textcolor{red}{maximize} the total amount of \textcolor{red}{reward} it receives while
+interacting with a complex and uncertain \textcolor{red}{environment}.
+
+一种\textcolor{red}{智能体}在与复杂且不确定的\textcolor{red}{环境}交互时，
+试图\textcolor{red}{最大化}其获得的总\textcolor{red}{奖励}的方法。
+
+\hfill - Sutton and Barto
+\end{definitionbox}
+
+\subsection{与其他方法的区别}
+
+\begin{enumerate}[
+  label=（\arabic*）,
+  labelindent=\parindent,
+  labelwidth=!,
+  leftmargin=*,
+  labelsep=0.4em,
+  parsep=0.5em
+]
+  \item 有监督学习（以图像分类为例）
+  
+  \begin{itemparagraph}
+  可以认为是给出一系列标注正确答案的图片，让AI学习，
+  自己找到其中的规律，然后给训练好的AI没见过的图片，让它给出答案。
+  \end{itemparagraph}
+
+  \begin{itemize}
+    \item 已标注的图像（Annotated）
+    \item 数据之间独立同分布（i.i.d）
+  \end{itemize}
+  \item 强化学习
+  
+  \begin{itemparagraph}
+  AI进行游戏，没有引导，只能知道在游戏规则下的得分，
+  AI自己学习使用什么策略方法取得尽可能高的分数。
+  \end{itemparagraph}
+
+  \begin{itemize}
+    \item 非即时反馈
+    \item 无正确标签
+    \item 数据之间非独立同分布（相关的时间序列数据）
+  \end{itemize}
+
+  \item 对比区别
+  
+  \begin{itemparagraph}
+  强化学习输入的是一组序列数据，并非独立同分布的数据；不存在监督者
+  或者标签告诉智能体正确答案，智能体只能收到规则下的奖励信号（分数），
+  并且信号也不是事实反馈的，而是存在延迟；需要通过尝试探索来发现
+  给出最大奖励的策略/方法。
+
+  强化学习中的智能体可以使用目前已知的最优策略，也需要去探索尝试
+  新的策略，但尝试也有可能发现的是更差的策略，因此强化学习的一个关键点
+  是\textbf{探索（exploration）与利用（exploitation）的平衡}。
+  \end{itemparagraph}
+\end{enumerate}
+
+\begin{keybox}[强化学习特点]
+  \begin{itemize}
+    \item 序列数据
+    \item 无监督学习
+    \item 探索与利用的平衡
+  \end{itemize}
+\end{keybox}
+
+\subsection{强化学习的优点}
+
+\indent 当使用有监督学习的方法时，算法的上限（Upper Bound）
+由人的标定的准确性所决定，不可能超过人类。而强化学习让智能体自行
+在环境中进行探索，因此能够获得超人类的表现（比如Alpha GO超越了人类）。
+
+\subsection{强化学习示例}
+
+下面以 DeepMind 在 Atari Pong 上的经典实践为例，详细推导过程
+与完整代码参见\cref{app:pong}。
+
+\input{figures/pong-policy-network.tex}

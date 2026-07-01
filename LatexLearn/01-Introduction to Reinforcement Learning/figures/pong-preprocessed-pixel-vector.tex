@@ -1,0 +1,147 @@
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+    x=1cm,
+    y=1cm,
+    >=Stealth,
+    font=\small,
+    flow/.style={
+      draw=noteBlue,
+      very thick,
+      -Stealth,
+      line cap=round,
+      line join=round
+    },
+    netline/.style={
+      draw=black!55,
+      line width=0.32pt,
+      opacity=0.55
+    },
+    pixframe/.style={
+      draw=black!65,
+      very thick,
+      fill=brown!70!black
+    },
+    hidden/.style={
+      circle,
+      draw=black!65,
+      line width=0.75pt,
+      fill=noteBlue!16,
+      minimum size=0.48cm
+    },
+    output/.style={
+      circle,
+      draw=black!65,
+      line width=0.75pt,
+      fill=red!20,
+      minimum size=0.58cm
+    },
+    label/.style={font=\small},
+    graphaxis/.style={draw=black!45, line width=0.35pt, -Stealth},
+    channelcell/.style={line width=0.38pt},
+    formula/.style={font=\small, fill=white, inner sep=1.5pt}
+  ]
+    % --- Raw Pong frame. ---
+    \begin{scope}[shift={(0,0)}]
+      \node[pixframe, minimum width=2.25cm, minimum height=2.25cm] (screen) at (0,0) {};
+      \draw[orange!45, line width=1.05pt]
+        (-0.56,0.83) rectangle (-0.46,1.04);
+      \draw[green!60!black, line width=1.05pt]
+        (0.46,0.83) rectangle (0.56,1.04);
+      \draw[white, line width=3.4pt]
+        ([xshift=0pt,yshift=-0.535cm]screen.north west) --
+        ([xshift=0pt,yshift=-0.535cm]screen.north east);
+      \fill[orange!20]
+        ([xshift=-0.84cm,yshift=-0.74cm]screen.center) rectangle
+        ++(0.07,0.29);
+      \fill[green!55!black]
+        ([xshift=0.78cm,yshift=-1.09cm]screen.center) rectangle
+        ++(0.07,0.29);
+      \fill[white] ([xshift=-0.12cm,yshift=-0.23cm]screen.center) rectangle ++(0.034,0.034);
+      \node[label, anchor=south] at ([yshift=2pt]screen.north) {原始 Pong 帧};
+    \end{scope}
+
+    \draw[flow] (1.42,0) -- (2.55,0);
+    \node[label, anchor=south] at (1.98,0.20) {预处理};
+    \node[label, anchor=north] at (1.98,-0.20) {展平};
+
+    % --- Input vector x: one vertical vector split into RGB blocks. ---
+    \begin{scope}[shift={(3.35,-2.25)}]
+      \node[label, anchor=south] at (0.69,4.68) {输入向量 $x$};
+
+      \fill[red!10] (0,3.00) rectangle (1.38,4.50);
+      \draw[red!65!black, channelcell] (0,3.00) rectangle (1.38,4.50);
+      \foreach \y in {3.50,4.00} {
+        \draw[red!35] (0,\y) -- (1.38,\y);
+      }
+      \node[text=red!65!black, anchor=east] at (-0.16,3.75) {R};
+      \node at (0.69,4.25) {$x_{R,1}$};
+      \node at (0.69,3.75) {$x_{R,2}$};
+      \node at (0.69,3.25) {$\vdots$};
+
+      \fill[green!10] (0,1.50) rectangle (1.38,3.00);
+      \draw[green!50!black, channelcell] (0,1.50) rectangle (1.38,3.00);
+      \foreach \y in {2.00,2.50} {
+        \draw[green!35!black!35] (0,\y) -- (1.38,\y);
+      }
+      \node[text=green!45!black, anchor=east] at (-0.16,2.25) {G};
+      \node at (0.69,2.75) {$x_{G,1}$};
+      \node at (0.69,2.25) {$x_{G,2}$};
+      \node at (0.69,1.75) {$\vdots$};
+
+      \fill[blue!10] (0,0) rectangle (1.38,1.50);
+      \draw[blue!65!black, channelcell] (0,0) rectangle (1.38,1.50);
+      \foreach \y in {0.50,1.00} {
+        \draw[blue!35] (0,\y) -- (1.38,\y);
+      }
+      \node[text=blue!65!black, anchor=east] at (-0.16,0.75) {B};
+      \node at (0.69,1.25) {$x_{B,1}$};
+      \node at (0.69,0.75) {$x_{B,2}$};
+      \node at (0.69,0.25) {$\vdots$};
+    \end{scope}
+
+    % --- Hidden layer. ---
+    \node[label, text=noteBlue] at (7.45,1.60) {隐藏层 $h$};
+    \foreach \i/\y in {1/1.03,2/0.52,3/0.01,4/-0.50,5/-1.01} {
+      \node[hidden] (h\i) at (7.45,\y) {};
+    }
+
+    \foreach \y in {1.90,0.95,0.00,-0.95,-1.90} {
+      \foreach \i in {1,2,3,4,5} {
+        \draw[netline] (4.73,\y) -- (h\i.west);
+      }
+    }
+
+    \node[formula] at (7.45,-2) {$h=\mathrm{ReLU}(W_1x)$};
+    \node[formula] at (5.92,1.88) {$W_1$};
+
+    % --- ReLU function graph, separated from the main connections. ---
+    \begin{scope}[shift={(7.45,2.50)}, x=0.55cm, y=0.55cm]
+      \draw[graphaxis] (-1.06,0) -- (1.18,0);
+      \draw[graphaxis] (0,-0.12) -- (0,1.12);
+      \draw[noteOrange, very thick] (-1.0,0) -- (0,0) -- (1.0,1.0);
+      \node[label, anchor=south] at (0.32,1.04) {$\mathrm{ReLU}(z)$};
+    \end{scope}
+
+    % --- Output probability. ---
+    \node[output] (p) at (10.85,0.01) {$p$};
+    \foreach \i in {1,2,3,4,5} {
+      \draw[netline] (h\i.east) -- (p.west);
+    }
+    \node[formula] at (10.85,-1) {$p=\sigma(W_2h)$};
+    \node[formula] at (9.25,1.25) {$W_2$};
+    \node[label, align=left, anchor=west] at (11.25,0.01) {动作概率};
+
+    % --- Sigmoid function graph, separated from the main connections. ---
+    \begin{scope}[shift={(10.85,2.50)}, x=0.55cm, y=0.55cm]
+      \draw[graphaxis] (-2.10,0) -- (2.20,0);
+      \draw[graphaxis] (0,-0.10) -- (0,1.14);
+      \draw[black!25, line width=0.3pt] (-2.00,1.00) -- (2.05,1.00);
+      \draw[red!70!black, very thick, domain=-2:2, samples=80, smooth]
+        plot (\x,{1/(1+exp(-3*\x))});
+      \node[label, anchor=south] at (0.62,1.05) {$\sigma(z)$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{策略网络前向计算示意。}
+  \label{fig:pong-preprocessed-pixel-vector}
+\end{figure}

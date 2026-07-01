@@ -1,0 +1,9 @@
+\section{Q-Learning}
+
+Q-Learning 的核心更新为
+\[
+  Q(s_t,a_t)\leftarrow Q(s_t,a_t)+\alpha
+  \left[
+    r_t+\discount\max_{a'}Q(s_{t+1},a')-Q(s_t,a_t)
+  \right].
+\]

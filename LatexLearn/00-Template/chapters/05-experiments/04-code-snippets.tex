@@ -1,0 +1,10 @@
+\section{代码片段}
+
+\begin{lstlisting}[caption={训练循环示例},label={lst:train-loop}]
+for step in range(total_steps):
+    action = agent.act(obs)
+    next_obs, reward, done, info = env.step(action)
+    replay_buffer.add(obs, action, reward, next_obs, done)
+    agent.update(replay_buffer)
+    obs = env.reset() if done else next_obs
+\end{lstlisting}

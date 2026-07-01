@@ -1,0 +1,69 @@
+% -*- coding: utf-8 -*-
+% 高数基础知识.tex
+% 高数基础知识
+\documentclass[UTF8]{ctexart}
+\usepackage{geometry}
+
+\geometry{a4paper,scale=0.8}
+
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{enumitem}
+
+% ===== 树状图/分类结构 =====
+\usepackage{tikz}
+\usetikzlibrary{trees,positioning}
+
+
+\title{高数基础知识}
+\author{埃及猪肉}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+
+\section*{基础概念}
+
+% 使用 cases 环境实现横向大括号树状图
+\[
+\begin{aligned}
+&\text{解析式} \begin{cases}
+    \text{代数式} \begin{cases}
+        \text{有理式} \begin{cases}
+            \text{整式} \begin{cases}
+                \text{单项式} \\
+                \text{多项式}
+            \end{cases} \\
+            \text{分式} \begin{cases}
+                \text{真分式} \\
+                \text{假分式}
+            \end{cases}
+        \end{cases} \\
+        \text{无理式}
+    \end{cases} \\
+    \text{超越式}
+\end{cases}
+\end{aligned}
+\]
+
+\vspace{1em}
+
+% 注释说明
+\begin{enumerate}[label=\textcircled{\arabic*}]
+    \item \textbf{有理式和无理式的区分}
+    
+    含有\textbf{字母}的根式运算的代数式是无理式。
+    
+    $\sqrt{2x}$ 是无理式，$\sqrt{2}x$ 是有理式。
+    
+    \item 含有字母的指数为无理数的指数运算、对数运算、三角运算和反三角运算的解析式，如
+    \[
+    \ln(x^2+y^2),\quad \arctan x,\quad a^{\sqrt{x}} \text{ 等}
+    \]
+\end{enumerate}
+
+\end{document}

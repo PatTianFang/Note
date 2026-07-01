@@ -1,0 +1,11 @@
+\section{连续控制算法}
+
+\begin{itemize}
+  \item DDPG：确定性策略梯度，适合连续动作。
+  \item TD3：在 DDPG 上加入双 Critic、延迟 Actor 更新和目标策略平滑。
+  \item SAC：最大熵强化学习，目标中加入熵奖励，提高探索和鲁棒性。
+\end{itemize}
+
+\begin{questionbox}
+当训练曲线突然崩溃时，优先检查：奖励尺度、优势归一化、学习率、目标网络更新、动作裁剪和环境终止条件。
+\end{questionbox}

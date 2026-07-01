@@ -1,0 +1,80 @@
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+    x=1cm,
+    y=1cm,
+    >=Stealth,
+    font=\small,
+    netline/.style={draw=black!75, line width=0.6pt},
+    pixframe/.style={
+      draw=black!65,
+      very thick,
+      fill=brown!70!black
+    },
+    hidden/.style={
+      circle,
+      draw=black!65,
+      line width=0.8pt,
+      fill=noteBlue!18,
+      minimum size=0.62cm
+    },
+    output/.style={
+      circle,
+      draw=black!65,
+      line width=0.8pt,
+      fill=red!22,
+      minimum size=0.62cm
+    },
+    label/.style={font=\small}
+  ]
+    % --- Raw pixels ---
+    \begin{scope}[shift={(1.775,1.775)}]
+      \node[pixframe, minimum width=3.55cm, minimum height=3.55cm] (screen) at (0,0) {};
+      \draw[orange!45, line width=1.3pt]
+        (-0.89,1.31) rectangle (-0.72,1.64);
+      \draw[green!60!black, line width=1.3pt]
+        (0.72,1.31) rectangle (0.89,1.64);
+      \draw[white, line width=5pt]
+        ([xshift=0pt,yshift=-0.845cm]screen.north west) --
+        ([xshift=0pt,yshift=-0.845cm]screen.north east);
+      \fill[orange!20]
+        ([xshift=-1.32cm,yshift=-1.16cm]screen.center) rectangle
+        ++(0.11,0.45);
+      \fill[green!55!black]
+        ([xshift=1.22cm,yshift=-1.71cm]screen.center) rectangle
+        ++(0.11,0.45);
+      \fill[white] ([xshift=-0.18cm,yshift=-0.34cm]screen.center) rectangle ++(0.05,0.05);
+      \node[label, anchor=south] at ([yshift=2pt]screen.north) {原始像素};
+    \end{scope}
+
+    % --- Hidden layer nodes ---
+    \node[label, text=noteBlue] at (5.65,3.78) {隐藏层};
+    \foreach \i/\y in {1/3.25,2/2.50,3/1.75,4/1.00,5/0.25} {
+      \node[hidden] (h\i) at (5.55,\y) {};
+    }
+
+    \foreach \x/\y in {
+      3.55/3.55,
+      3.55/2.75,
+      3.55/2.05,
+      3.55/1.35,
+      3.55/0.70,
+      3.55/0.05
+    } {
+      \foreach \i in {1,2,3,4,5} {
+        \draw[netline] (\x,\y) -- (h\i.west);
+      }
+    }
+
+    % Output node and connections.
+    \node[output] (out) at (7.85,1.75) {};
+    \foreach \i in {1,2,3,4,5} {
+      \draw[netline] (h\i.east) -- (out.west);
+    }
+
+    \node[label, text=red!70!black, align=left, anchor=west]
+      at (8.18,2.35) {向上或向下\\的概率};
+  \end{tikzpicture}
+  \caption{两层全连接策略网络从原始像素输出向上或向下的概率}
+  \label{fig:pong-two-layer-policy-network}
+\end{figure}

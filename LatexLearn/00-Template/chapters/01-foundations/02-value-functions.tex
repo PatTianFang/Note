@@ -1,0 +1,16 @@
+\section{值函数}
+
+状态值函数：
+\[
+  \valuefn(s)=\E_{\policy}\left[G_t\mid s_t=s\right].
+\]
+
+动作值函数：
+\[
+  \qvalue(s,a)=\E_{\policy}\left[G_t\mid s_t=s,a_t=a\right].
+\]
+
+优势函数：
+\[
+  \advantage(s,a)=\qvalue(s,a)-\valuefn(s).
+\]

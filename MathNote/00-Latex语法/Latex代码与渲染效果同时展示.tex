@@ -1,0 +1,147 @@
+% -*- coding: utf-8 -*-
+% Latex代码与渲染效果同时展示.tex
+% Latex代码与渲染效果同时展示
+\documentclass[UTF8]{ctexart}
+\usepackage{geometry}
+
+\geometry{a4paper,scale=0.8}
+
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{minted}
+\usepackage{tcolorbox}
+\tcbuselibrary{listings,skins}
+
+% 定义 latexexample 环境
+\newtcblisting{latexexample}[1][]{
+    colback=gray!10,
+    colframe=gray!50,
+    listing side text,  % 左侧代码，右侧效果
+    title={LaTeX 示例},
+    fonttitle=\bfseries,
+    #1
+}
+
+\title{\LaTeX 代码与渲染效果同时展示}
+\author{埃及猪肉}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{LaTeX 示例}
+
+\begin{latexexample}
+Good: One, two, three\ldots
+
+Bad: One, two, three...
+\end{latexexample}
+
+\section{实现细节}
+
+\subsection{实现方法}
+
+\subsubsection{完整代码示例}
+
+以下是完整的实现代码，包含导言区配置和正文使用：
+
+\begin{tcolorbox}[colback=gray!5,colframe=gray!50,title={完整代码}]
+\begin{verbatim}
+% 导言区
+\documentclass[UTF8]{ctexart}
+\usepackage{tcolorbox}
+\tcbuselibrary{listings,skins}
+
+\newtcblisting{latexexample}[1][]{
+    colback=gray!10,
+    colframe=gray!50,
+    listing side text,
+    title={LaTeX 示例},
+    fonttitle=\bfseries,
+    #1
+}
+
+% 正文区
+\begin{document}
+\begin{latexexample}
+Good: One, two, three\ldots
+
+Bad: One, two, three...
+\end{latexexample}
+\end{document}
+\end{verbatim}
+\end{tcolorbox}
+
+\subsubsection{分步说明}
+
+在导言区定义环境，然后在正文中使用：
+
+\begin{enumerate}
+    \item \textbf{导言区定义}
+    \begin{tcolorbox}[colback=gray!5,colframe=gray!50,title={导言区代码}]
+\begin{verbatim}
+\newtcblisting{latexexample}[1][]{
+    colback=gray!10,
+    colframe=gray!50,
+    listing side text,
+    title={LaTeX 示例},
+    fonttitle=\bfseries,
+    #1
+}
+\end{verbatim}
+    \end{tcolorbox}
+
+    \item \textbf{正文中使用}
+    \begin{tcolorbox}[colback=gray!5,colframe=gray!50,title={正文代码}]
+\begin{verbatim}
+\begin{latexexample}
+Good: One, two, three\ldots
+
+Bad: One, two, three...
+\end{latexexample}
+\end{verbatim}
+    \end{tcolorbox}
+
+    \item \textbf{渲染效果}
+
+    \begin{latexexample}
+Good: One, two, three\ldots
+
+Bad: One, two, three...
+    \end{latexexample}
+\end{enumerate}
+
+\subsection{核心原理}
+
+本功能依赖于 \texttt{tcolorbox} 宏包的 \texttt{listings} 库，通过 \texttt{newtcblisting} 命令创建自定义环境。
+
+\texttt{listing side text} 选项将内容区域分为两部分：
+\begin{itemize}
+    \item 左侧：显示源代码（由 listings 处理）
+    \item 右侧：显示渲染效果（由 LaTeX 编译）
+\end{itemize}
+
+\subsection{环境定义解析}
+
+\begin{itemize}
+    \item \texttt{colback=gray!10}：设置背景颜色为浅灰色
+    \item \texttt{colframe=gray!50}：设置边框颜色为中灰色
+    \item \texttt{listing side text}：启用左右分栏布局
+    \item \texttt{title=\{...\}}：设置标题
+    \item \texttt{fonttitle=\textbackslash bfseries}：标题加粗
+    \item \texttt{\#1}：允许传递额外参数进行自定义
+\end{itemize}
+
+\subsection{使用限制}
+
+\begin{itemize}
+    \item 不支持包含 \texttt{\$...\$} 的复杂数学公式
+    \item 不支持 \texttt{\textbackslash begin\{...\}} 环境嵌套
+    \item 不支持导言区命令（如 \texttt{\textbackslash usepackage}）
+    \item 适合展示简单的文本和格式示例
+\end{itemize}
+
+
+\end{document}

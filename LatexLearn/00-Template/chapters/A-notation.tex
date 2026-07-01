@@ -1,0 +1,20 @@
+\chapter{符号表}
+
+\begin{longtable}{p{3cm}p{10cm}}
+  \toprule
+  符号 & 含义 \\
+  \midrule
+  $\states$ & 状态空间 \\
+  $\actions$ & 动作空间 \\
+  $\policy(a\mid s)$ & 策略，在状态 $s$ 下选择动作 $a$ 的概率 \\
+  $\transition(s'\mid s,a)$ & 状态转移概率 \\
+  $\reward(s,a)$ & 奖励函数 \\
+  $\discount$ & 折扣因子 \\
+  $G_t$ & 从时刻 $t$ 开始的折扣回报 \\
+  $\valuefn(s)$ & 策略 $\policy$ 下的状态值函数 \\
+  $\qvalue(s,a)$ & 策略 $\policy$ 下的动作值函数 \\
+  $\advantage(s,a)$ & 优势函数 \\
+  $\replay$ & 经验回放池 \\
+  $\tdelta$ & TD 误差 \\
+  \bottomrule
+\end{longtable}

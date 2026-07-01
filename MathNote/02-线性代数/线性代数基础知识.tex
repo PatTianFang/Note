@@ -1,0 +1,64 @@
+% -*- coding: utf-8 -*-
+% 线代基础知识.tex
+% 线代基础知识
+\documentclass[UTF8]{ctexart}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{geometry}
+
+
+\geometry{a4paper,scale=0.8}
+\title{线性代数基础知识}
+\author{埃及猪肉}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{矩阵}
+
+\subsection{矩阵的运算}
+
+\paragraph{加法和数乘}
+这两种运算和代数运算一样
+\begin{itemize}
+    \item 交换律：
+        \[A + B = B + A\]
+    \item 结合律：
+        \[(A + B) + C = A + (B + C)\]
+    \item 分配律：
+        \begin{align*}
+        k(A + B) &= kA + kB \\
+        (k + l)A &= kA + lA
+        \end{align*}
+\end{itemize}
+
+\paragraph{矩阵乘法}
+\begin{itemize}
+    \item 结合律：
+        \[
+        (A_{m \times s} B_{s \times r}) C_{r \times n} = A_{m \times s} (B_{s \times r} C_{r \times n})
+        \]
+    \item 分配律：
+        \[
+        A_{m \times s} (B_{s \times n} + C_{s \times n}) = A_{m \times s} B_{s \times n} + A_{m \times s} C_{s \times n}
+        \]
+        \[
+        (A_{m \times s} + B_{m \times s}) C_{s \times n} = A_{m \times s} C_{s \times n} + B_{m \times s} C_{s \times n}
+        \]
+\end{itemize}
+
+{\color{red}
+\paragraph{关键：}矩阵乘法没有交换律，其他都一样。
+\[
+AB \neq BA.
+\]
+}
+
+（但$(kA_{m \times s}) B_{s \times n} = A_{m \times s} (kB_{s \times n}) = k (A_{m \times s} B_{s \times n})$常数仍能使用交换律，但不能改变矩阵顺序。）
+
+
+
+
+\end{document}

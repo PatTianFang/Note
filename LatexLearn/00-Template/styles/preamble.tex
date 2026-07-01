@@ -1,0 +1,139 @@
+% 编译建议：latexmk -xelatex main.tex
+
+\usepackage[a4paper,margin=2.5cm,headheight=15pt]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,mathtools,bm}
+\usepackage{booktabs,array,longtable,multirow}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[most]{tcolorbox}
+\usepackage{algorithm2e}
+\usepackage{listings}
+\usepackage[
+  backend=biber,
+  style=gb7714-2015,
+  sorting=nyt
+]{biblatex}
+\usepackage{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\addbibresource{references.bib}
+\graphicspath{{figures/}}
+
+\hypersetup{
+  colorlinks=true,
+  hypertexnames=false,
+  linkcolor=blue!60!black,
+  citecolor=green!45!black,
+  urlcolor=purple!60!black,
+  pdftitle={深度强化学习笔记},
+  pdfauthor={你的名字}
+}
+
+\setlist[itemize]{leftmargin=2em,itemsep=2pt,topsep=4pt}
+\setlist[enumerate]{leftmargin=2em,itemsep=2pt,topsep=4pt}
+\captionsetup{font=small,labelfont=bf,labelsep=quad}
+
+\definecolor{noteBlue}{RGB}{35,95,170}
+\definecolor{noteGreen}{RGB}{36,130,90}
+\definecolor{noteOrange}{RGB}{190,105,30}
+\definecolor{notePurple}{RGB}{105,70,155}
+\definecolor{codeBg}{RGB}{248,248,248}
+\definecolor{codeFrame}{RGB}{220,220,220}
+\definecolor{codeKeyword}{RGB}{0,92,175}
+\definecolor{codeComment}{RGB}{88,135,85}
+\definecolor{codeString}{RGB}{160,70,70}
+
+\tcbset{
+  enhanced,
+  breakable,
+  arc=2mm,
+  boxrule=0.6pt,
+  left=1.5mm,
+  right=1.5mm,
+  top=1mm,
+  bottom=1mm,
+  colback=white
+}
+
+\newtcolorbox{definitionbox}[1][]{
+  title={定义 #1},
+  colframe=noteBlue,
+  colback=noteBlue!4
+}
+
+\newtcolorbox{keybox}[1][]{
+  title={关键结论 #1},
+  colframe=noteGreen,
+  colback=noteGreen!4
+}
+
+\newtcolorbox{warningbox}[1][]{
+  title={注意 #1},
+  colframe=noteOrange,
+  colback=noteOrange!6
+}
+
+\newtcolorbox{questionbox}[1][]{
+  title={待思考 #1},
+  colframe=notePurple,
+  colback=notePurple!5
+}
+
+\SetKwInput{KwInput}{输入}
+\SetKwInput{KwOutput}{输出}
+\SetKw{KwInit}{初始化}
+\SetKw{KwReturn}{返回}
+\SetAlgoLined
+\DontPrintSemicolon
+
+\lstdefinestyle{pythonstyle}{
+  language=Python,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{codeKeyword}\bfseries,
+  commentstyle=\color{codeComment},
+  stringstyle=\color{codeString},
+  backgroundcolor=\color{codeBg},
+  frame=single,
+  rulecolor=\color{codeFrame},
+  breaklines=true,
+  showstringspaces=false,
+  tabsize=4,
+  numbers=left,
+  numberstyle=\tiny\color{gray}
+}
+\lstset{style=pythonstyle}
+
+% 常用集合与算子
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\1}{\mathbf{1}}
+\newcommand{\KL}{\mathrm{KL}}
+\newcommand{\Entropy}{\mathcal{H}}
+\newcommand{\argmax}{\operatorname*{arg\,max}}
+\newcommand{\argmin}{\operatorname*{arg\,min}}
+
+% 强化学习符号
+\newcommand{\states}{\mathcal{S}}
+\newcommand{\actions}{\mathcal{A}}
+\newcommand{\transition}{P}
+\newcommand{\reward}{r}
+\newcommand{\discount}{\gamma}
+\newcommand{\policy}{\pi}
+\newcommand{\trajectory}{\tau}
+\newcommand{\replay}{\mathcal{D}}
+\newcommand{\params}{\theta}
+\newcommand{\oldparams}{\theta_{\mathrm{old}}}
+\newcommand{\valuefn}{V^{\policy}}
+\newcommand{\qvalue}{Q^{\policy}}
+\newcommand{\advantage}{A^{\policy}}
+\newcommand{\tdtarget}{y^{\mathrm{TD}}}
+\newcommand{\tdelta}{\delta}
+
+\newcommand{\figref}[1]{\cref{#1}}
+\newcommand{\tabref}[1]{\cref{#1}}
+\newcommand{\eqnref}[1]{\cref{#1}}

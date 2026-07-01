@@ -1,0 +1,20 @@
+\section{目标函数}
+
+参数化策略记为 $\policy_{\params}(a\mid s)$。优化目标：
+\[
+  J(\params)=\E_{\trajectory\sim\policy_{\params}}
+  \left[
+    \sum_{t=0}^{T}\discount^t r_t
+  \right].
+\]
+
+策略梯度定理给出：
+\[
+  \nabla_{\params}J(\params)
+  =
+  \E_{\trajectory\sim\policy_{\params}}
+  \left[
+    \sum_{t=0}^{T}
+    \nabla_{\params}\log\policy_{\params}(a_t\mid s_t)G_t
+  \right].
+\]

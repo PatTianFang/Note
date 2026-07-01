@@ -1,0 +1,47 @@
+% -*- coding: utf-8 -*-
+% Latex语法.tex
+% Latex语法
+\documentclass[UTF8]{ctexart}
+\usepackage{geometry}
+
+\geometry{a4paper,scale=0.8}
+
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{minted}
+\usepackage{tcolorbox}
+\tcbuselibrary{listings,skins}
+
+% 定义 latexexample 环境
+\newtcblisting{latexexample}[1][]{
+    colback=gray!10,
+    colframe=gray!50,
+    listing side text,  % 左侧代码，右侧效果
+    title={LaTeX 示例},
+    fonttitle=\bfseries,
+    #1
+}
+
+\title{\LaTeX 语法}
+\author{埃及猪肉}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+
+\section{文本的编辑和组织}
+
+\subsection{文字和符号}
+
+
+
+\begin{latexexample}
+Good: One, two, three\ldots
+
+Bad: One, two, three...
+\end{latexexample}
+
+
+\end{document}

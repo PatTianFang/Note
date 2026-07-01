@@ -1,0 +1,100 @@
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+    x=1cm,
+    y=1cm,
+    >=Stealth,
+    flow/.style={
+      draw=noteBlue,
+      very thick,
+      -Stealth,
+      line cap=round,
+      line join=round
+    },
+    pixframe/.style={
+      draw=black!65,
+      very thick,
+      fill=brown!70!black
+    },
+    layerlabel/.style={
+      font=\bfseries\small,
+      text=white
+    },
+    label/.style={font=\small},
+    smalllabel/.style={font=\small}
+  ]
+    % --- Atari Pong 像素画面，保持与图 1.2 相近的画法 ---
+    \begin{scope}[shift={(0,0)}]
+      \node[pixframe, minimum width=2.9cm, minimum height=2.9cm] (screen) at (0,0) {};
+      \draw[orange!45, line width=1.3pt]
+        (-0.73,1.07) rectangle (-0.59,1.34);
+      \draw[green!60!black, line width=1.3pt]
+        (0.59,1.07) rectangle (0.73,1.34);
+      \draw[white, line width=4.5pt]
+        ([xshift=0pt,yshift=-0.69cm]screen.north west) --
+        ([xshift=0pt,yshift=-0.69cm]screen.north east);
+      \fill[orange!20]
+        ([xshift=-1.08cm,yshift=-0.95cm]screen.center) rectangle
+        ++(0.09,0.37);
+      \fill[green!55!black]
+        ([xshift=1.00cm,yshift=-1.40cm]screen.center) rectangle
+        ++(0.09,0.37);
+      \fill[white] ([xshift=-0.15cm,yshift=-0.28cm]screen.center) rectangle ++(0.04,0.04);
+      \node[label, anchor=south] at ([yshift=2pt]screen.north) {一帧原始像素};
+      \node[smalllabel, anchor=north, align=center] at ([yshift=-2pt]screen.south)
+        {白线下方：\\$210$ 像素宽 $\times$ $160$ 像素高};
+    \end{scope}
+
+    \draw[flow] (1.85,0) -- (3.05,0);
+    \node[label, anchor=south] at (2.45,0) {转为数组};
+
+    % --- 右侧：三层 RGB 像素数组 ---
+    \begin{scope}[shift={(3.8,-1.25)}]
+      % B layer.
+      \fill[blue!14, fill opacity=0.95] (0.92,0.72) rectangle (3.92,3.12);
+      \draw[blue!65!black, very thick, rounded corners=2pt] (0.92,0.72) rectangle (3.92,3.12);
+      \foreach \x in {1.42,1.92,2.42,2.92,3.42} {
+        \draw[blue!35] (\x,0.72) -- (\x,3.12);
+      }
+      \foreach \y in {1.12,1.52,1.92,2.32,2.72} {
+        \draw[blue!35] (0.92,\y) -- (3.92,\y);
+      }
+      \fill[blue!65!black] (3.55,2.78) rectangle (3.92,3.12);
+      \node[layerlabel] at (3.735,2.95) {B};
+
+      % G layer.
+      \fill[green!14, fill opacity=0.95] (0.46,0.36) rectangle (3.46,2.76);
+      \draw[green!50!black, very thick, rounded corners=2pt] (0.46,0.36) rectangle (3.46,2.76);
+      \foreach \x in {0.96,1.46,1.96,2.46,2.96} {
+        \draw[green!35!black!35] (\x,0.36) -- (\x,2.76);
+      }
+      \foreach \y in {0.76,1.16,1.56,1.96,2.36} {
+        \draw[green!35!black!35] (0.46,\y) -- (3.46,\y);
+      }
+      \fill[green!50!black] (3.09,2.42) rectangle (3.46,2.76);
+      \node[layerlabel] at (3.275,2.59) {G};
+
+      % R layer.
+      \fill[red!12] (0,0) rectangle (3.0,2.4);
+      \draw[red!70!black, very thick, rounded corners=2pt] (0,0) rectangle (3.0,2.4);
+      \foreach \x in {0.5,1.0,1.5,2.0,2.5} {
+        \draw[red!35] (\x,0) -- (\x,2.4);
+      }
+      \foreach \y in {0.4,0.8,1.2,1.6,2.0} {
+        \draw[red!35] (0,\y) -- (3.0,\y);
+      }
+      \fill[red!70!black] (2.63,2.06) rectangle (3.0,2.4);
+      \node[layerlabel] at (2.815,2.23) {R};
+
+      \node[font=\bfseries\small] at (2.18,3.72) {RGB 三层像素数组};
+      \node[label, align=center] at (1.5,-0.55)
+        {$210 \times 160 \times 3~\mathrm{Byte}$\\宽度 $\times$ 高度 $\times$ 颜色通道};
+
+      \draw[flow] (4.20,1.82) -- (4.70,1.82);
+      \node[smalllabel, align=left, anchor=west] at (4.85,1.82)
+        {每个通道元素：\\$1~\mathrm{Byte}=8~\mathrm{bit}$\\取值 $0 \sim 255$（256 种）};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{Pong 图像帧可以表示为一个 $210 \times 160 \times 3~\mathrm{Byte}$ 的 RGB 像素数组。}
+  \label{fig:pong-frame-array}
+\end{figure}

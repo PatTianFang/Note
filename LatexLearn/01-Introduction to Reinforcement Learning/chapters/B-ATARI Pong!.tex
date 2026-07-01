@@ -1,0 +1,120 @@
+\chapter{强化学习游玩雅达利游戏Pong!}
+\label{app:pong}
+
+本内容主要参考自 Andrej Karpathy 的博客文章：
+\url{https://karpathy.github.io/2016/05/31/rl/}
+
+\section{引言}
+
+4个限制AI发展的因素：
+
+\begin{enumerate}[
+  label=（\arabic*）,
+  labelindent=\parindent,
+  labelwidth=!,
+  leftmargin=*,
+  labelsep=0.4em,
+  parsep=0.5em
+]
+  \item \textbf{Compute}（算力）：最显而易见的因素，例如摩尔定律、GPU、ASIC；
+  \item \textbf{Data}（数据）：以结构化、可直接使用的形式存在的数据，例如 ImageNet；
+  \item \textbf{Algorithms}（算法）：研究与创新，例如反向传播（backprop）、CNN、LSTM；
+  \item \textbf{Infrastructure}（基础设施）：底层软件栈，例如 Linux、TCP/IP、Git、ROS、PR2、AWS、AMT、TensorFlow 等。
+\end{enumerate}
+
+下面使用130行Python，仅用numpy作为依赖，
+从零开始用像素和深度神经网络玩一款ATARI游戏（Pong！）。
+
+\section{像素乒乓球（Pong from Pixels）}
+
+\subsection{背景}
+
+\textbf{游戏规则：}游戏中存在两个乒乓球拍和一个乒乓球，
+其中一个球拍由玩家控制，另一个由AI控制，双方需要使用球拍接住球，
+并让球通过球拍反弹给另一个球员。
+
+\textbf{规则分析：}每一时刻，玩家/AI接收到一个图像帧
+（210×160×3字节的数组），然后对球拍做出对应动作：
+向上或是向下移动球拍（二元选择）。
+每次做出选择后，游戏模拟器会执行相应动作并计算分数：
+如果球越过对手方，则获得+1奖励；如果未能击中球，
+则获得-1奖励。
+
+\textbf{目标：}通过移动球拍来获取尽可能多的奖励。
+
+\input{figures/pong-frame-array.tex}
+
+\subsection{实现}
+
+\subsubsection{策略网络（智能体）}
+
+智能体部分用\textbf{策略网络}（Policy Network）来实现。
+
+策略网络由一个两层神经网络构成，该网络的输入为游戏当前像素（210×160×3字节的数组），
+输出采取的动作（向上或向下移动）。
+
+\input{figures/pong-two-layer-policy-network.tex}
+
+代码部分如下：
+
+\begin{lstlisting}[language=Python, aboveskip=\baselineskip, belowskip=\baselineskip]
+h = np.dot(W1, x) # 计算隐藏层神经元激活值
+h[h < 0] = 0 # ReLU非线性：将小于0的值截断为0
+logp = np.dot(W2, h) # 计算向上移动的对数概率
+p = 1.0 / (1.0 + np.exp(-logp)) # sigmoid函数：得到向上移动的概率
+\end{lstlisting}
+
+$x$作为输入，包含了游戏画面的像素信息；$w_1$和$w_2$分别为连接输入向量$x$和隐藏层$h$、隐藏层$h$
+和动作概率$p$各节点的权重，没有使用偏置$b$；最终的输出$p$固定为向上移动球拍的概率（$1 - p$就是
+向下移动球拍的概率）。
+
+因为隐藏层没有输出数值大小限制，使用ReLU函数；而最终的输出是一个概率，要求处于$[0,1]$之间，使用
+sigmoid函数。
+
+\input{figures/pong-preprocessed-pixel-vector.tex}
+
+从设计上来看，权重$w_1$使隐藏层$h$能够识别游戏当前形势
+（球在哪、拍在哪），而权重$W_2$影响输出$p$，决定球拍向上移动还是向下移动。
+
+随机权重矩阵$w_1$、$w_2$的初始值，智能体控制球拍会随机乱动。
+为了让智能体学会打乒乓球，我们需要做的就是调整权重。
+
+\subsubsection{预处理}
+
+目前我们设计的网络输入是当前的一帧图片，如果只输入当前帧到网络，
+决策没有考虑到球拍和球的运动。所以希望向策略网络输入至少两帧图像，
+这样它才能检测到运动。
+
+然而这样存在\textbf{信用分配问题}，奖励并不是实时反馈的，
+你甚至无法预知反馈会在多少个时间步后返回。当前时刻对球拍的
+移动无法知道在多久后导致游戏的胜利；换一个角度说，如果当前时刻
+取得了胜利，很难分辨出是之前哪一步的动作导致了胜利，更分不清之前的
+哪些动作的贡献大小是怎么分布的。
+
+\subsubsection{监督学习}
+
+我们可以参考监督学习的方法解决问题。
+
+在监督学习中，我们将图像输入网络，输出两个类别UP（上移）和DOWN（下移）的概率。
+假如UP的对数概率为$-1.2$，DOWN的对数概率为$-0.36$。（概率分别为$30\%$ 和 $70\%$）
+
+在监督学习中我们可以拿到标签。例如，我们可能会被告知，
+当前正确的动作是 UP（标签 0）。
+在实现中，我们会将 $+1.0$ 的梯度填入 UP 的对数概率位置，
+然后运行反向传播，计算梯度向量
+$\nabla_{\params}\log p(y=\mathrm{UP}\mid x)$。
+
+这个梯度会告诉我们：应当如何调整网络中的每一个参数，
+才能使网络在遇到类似图像时略微更倾向于预测 UP。
+例如，假设网络中有一百万个参数中的某一个梯度为 $-2.1$，
+它的含义是：若将该参数增大一个小的正值（例如 $0.001$），
+那么 UP 的对数概率就会下降 $2.1 \times 0.001$
+（下降是因为符号为负）。
+随后我们进行一次参数更新，棒！我们的网络在将来再看到非常相似的图像时，
+就会略微更倾向于预测 UP。
+
+\input{figures/pong-supervised-learning-diagram.tex}
+
+
+
+\section{代码分析}

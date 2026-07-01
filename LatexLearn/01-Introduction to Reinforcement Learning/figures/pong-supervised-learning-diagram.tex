@@ -1,0 +1,116 @@
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+    x=1cm,
+    y=1cm,
+    >=Stealth,
+    font=\small,
+    flow/.style={
+      draw=noteBlue,
+      line width=1.05pt,
+      -Stealth,
+      line cap=round,
+      line join=round
+    },
+    backflow/.style={
+      draw=red!75!black,
+      line width=1.05pt,
+      dashed,
+      -Stealth,
+      line cap=round,
+      line join=round
+    },
+    netline/.style={
+      draw=black!55,
+      line width=0.75pt,
+      -Stealth,
+      line cap=round,
+      line join=round
+    },
+    pixframe/.style={
+      draw=black!65,
+      very thick,
+      fill=brown!70!black
+    },
+    compute/.style={
+      draw=noteBlue!75!black,
+      line width=1.0pt,
+      rounded corners=4pt,
+      fill=noteBlue!6,
+      minimum width=2.95cm,
+      minimum height=1.30cm,
+      align=center,
+      inner sep=6pt
+    },
+    output/.style={
+      draw=black!65,
+      line width=0.85pt,
+      rounded corners=3pt,
+      fill=red!10,
+      minimum width=1.55cm,
+      minimum height=0.58cm,
+      align=center,
+      inner sep=3pt
+    },
+    target/.style={
+      draw=black!55,
+      line width=0.75pt,
+      rounded corners=2pt,
+      fill=white,
+      minimum width=0.58cm,
+      minimum height=0.50cm,
+      align=center,
+      inner sep=2pt
+    },
+    label/.style={font=\small}
+  ]
+    \begin{scope}[shift={(0,0)}]
+      \node[pixframe, minimum width=2.25cm, minimum height=2.25cm] (screen) at (0,0) {};
+      \draw[orange!45, line width=1.05pt]
+        (-0.55,0.83) rectangle (-0.44,1.05);
+      \draw[green!60!black, line width=1.05pt]
+        (0.44,0.83) rectangle (0.55,1.05);
+      \draw[white, line width=3.4pt]
+        ([yshift=-0.54cm]screen.north west) --
+        ([yshift=-0.54cm]screen.north east);
+      \fill[orange!20]
+        ([xshift=-0.84cm,yshift=-0.73cm]screen.center) rectangle ++(0.07,0.30);
+      \fill[green!55!black]
+        ([xshift=0.78cm,yshift=-1.05cm]screen.center) rectangle ++(0.07,0.30);
+      \fill[white]
+        ([xshift=-0.09cm,yshift=-0.20cm]screen.center) rectangle ++(0.035,0.035);
+      \node[label, anchor=south] at ([yshift=3pt]screen.north) {输入图像 $x$};
+    \end{scope}
+
+    \node[compute] (block) at (3.55,0)
+      {可微分计算块\\{\scriptsize 例如神经网络}};
+
+    \draw[flow]
+      ([xshift=0.05cm,yshift=0.36cm]block.north west) --
+      ([xshift=-0.05cm,yshift=0.36cm]block.north east);
+    \node[label, text=noteBlue, anchor=south]
+      at ([yshift=0.41cm]block.north) {前向传播};
+
+    \draw[backflow]
+      ([xshift=-0.05cm,yshift=-0.36cm]block.south east) --
+      ([xshift=0.05cm,yshift=-0.36cm]block.south west);
+    \node[label, text=red!75!black, anchor=north]
+      at ([yshift=-0.41cm]block.south) {反向传播};
+
+    \draw[netline] (screen.east) -- node[label, above, midway] {$x$} (block.west);
+
+    \node[output, draw=noteGreen!55!black, fill=noteGreen!16] (up) at (6.20,0.58) {向上移动};
+    \node[output] (down) at (6.20,-0.58) {向下移动};
+    \draw[netline] (block.east) -- (up.west);
+    \draw[netline] (block.east) -- (down.west);
+
+    \node[target, draw=noteGreen!55!black] (up-target) at (7.80,0.58) {$1$};
+    \node[target] (down-target) at (7.80,-0.58) {$0$};
+    \node[label, anchor=south] at (7.80,1.02) {标签};
+
+    \draw[netline, shorten >=2pt] (up.east) -- (up-target.west);
+    \draw[netline, shorten >=2pt] (down.east) -- (down-target.west);
+  \end{tikzpicture}
+  \caption{输入图像经过可微分计算块得到两个动作候选；监督学习标签将正确的向上移动记为 $1$，向下移动记为 $0$。}
+  \label{fig:pong-supervised-learning}
+\end{figure}

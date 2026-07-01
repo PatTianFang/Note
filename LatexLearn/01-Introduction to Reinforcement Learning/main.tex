@@ -1,0 +1,29 @@
+\documentclass[UTF8,12pt,a4paper,oneside]{ctexbook}
+
+\input{styles/preamble.tex}
+
+\title{\textbf{强化学习入门}\\
+  \large Introduction to Reinforcement Learning}
+\author{Pat Fang}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\frontmatter
+\input{chapters/00-preface.tex}
+\tableofcontents
+
+\mainmatter
+\input{chapters/01-foundations.tex}
+
+\appendix
+\input{chapters/A-notation.tex}
+\input{chapters/B-ATARI Pong!.tex}
+
+\backmatter
+\nocite{*}
+\printbibliography[heading=bibintoc,title={参考文献}]
+
+\end{document}

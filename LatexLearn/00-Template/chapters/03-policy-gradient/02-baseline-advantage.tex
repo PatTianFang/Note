@@ -1,0 +1,13 @@
+\section{Baseline 与优势函数}
+
+加入 baseline 不改变期望梯度，但可以降低方差：
+\[
+  \nabla_{\params}J(\params)
+  =
+  \E\left[
+    \nabla_{\params}\log\policy_{\params}(a_t\mid s_t)
+    \left(G_t-b(s_t)\right)
+  \right].
+\]
+
+常见选择是 $b(s_t)=V(s_t)$，此时括号内近似优势函数 $\advantage(s_t,a_t)$。

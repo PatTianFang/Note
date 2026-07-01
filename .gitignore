@@ -8,6 +8,10 @@
 !*.md
 !**/*.md
 
+# Allow Tex documents.
+!*.tex
+!**/*.tex
+
 # Allow image assets used by notes.
 !*.png
 !**/*.png

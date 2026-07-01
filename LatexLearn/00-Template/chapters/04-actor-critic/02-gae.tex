@@ -1,0 +1,10 @@
+\section{GAE}
+
+广义优势估计定义为
+\[
+  \hat{A}^{\mathrm{GAE}}_t
+  =
+  \sum_{l=0}^{\infty}(\discount\lambda)^l\tdelta_{t+l}.
+\]
+
+$\lambda$ 控制 bias-variance trade-off。$\lambda$ 越大，估计更接近 Monte Carlo，方差更高；$\lambda$ 越小，估计更依赖 Critic，偏差可能更高。

@@ -1,0 +1,464 @@
+% -*- coding: utf-8 -*-
+% Latex基础语法.tex
+% Latex基础语法
+\documentclass[UTF8]{ctexart}
+\usepackage{minted}
+\usepackage{geometry}
+
+\geometry{a4paper,scale=0.8}
+
+\usepackage{amsmath}
+\usepackage{float}  % 提供 [H] 选项
+\usepackage[svgnames]{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{listings,skins}
+
+% 定义 latexexample 环境
+\newtcblisting{latexexample}[1][]{
+    colback=gray!10,
+    colframe=gray!50,
+    listing side text,  % 左侧代码，右侧效果
+    title={LaTeX 示例},
+    fonttitle=\bfseries,
+    #1
+}
+
+\title{\LaTeX 基础语法}
+\author{埃及猪肉}
+\date{\today}
+
+
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+
+\section{简单结构}
+\begin{minted}[linenos, frame=single]{latex}
+\documentclass[UTF8]{ctexart}
+
+\usepackage{amsmath}
+\usepackage{float}  % 提供 [H] 选项
+\usepackage[svgnames]{xcolor}
+\usepackage{geometry}
+\geometry{a4paper, scale=0.8}
+
+\title{文档标题}
+\author{作者姓名}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{引言}
+
+这是一个简单的段落。LaTeX会自动处理段落缩进和换行。
+
+\subsection{子标题}
+
+这是子标题下的段落内容。
+
+\end{document}
+\end{minted}
+
+\section{文字排版}
+
+\subsection{字符输入}
+
+\subsubsection{换行和换页}
+
+在\LaTeX{} 中不会自动换行，需要间隔一行，或者手动输入换行符\verb|\\|、\verb|\par|或换行命令\verb|\newline|。
+
+
+\begin{latexexample}%
+我是第一行。
+我是第二行？
+
+我是第二行。\\我是第三行。
+
+我是第四行。\newline 我是第五行。
+
+我是第六行。\par 我是第七行。
+
+我是第八行。
+
+我是第九行。
+\end{latexexample}
+
+使用\verb|\newline|和\verb|\\|进行换行时，行首会顶格；而使用\verb|\par|和间隔一行进行换行时，行首会缩进。
+
+
+\subsubsection{字体}
+
+字体有多种样式，如加粗、斜体、下划线、等宽字体、无衬线字体等。\par
+相应的命令为：\verb|\textbf{}|、\verb|\textit{}|、\verb|\underline{}|、\verb|\texttt{}|、\verb|\textsf{}|。
+
+\begin{latexexample}%
+\textbf{加粗}
+
+\textit{斜体}
+
+\underline{下划线}
+
+\texttt{等宽字体}
+
+\textsf{无衬线字体}
+
+\textsf{\textbf{加粗无衬线字体}}
+\end{latexexample}
+
+
+\subsubsection{字体大小}
+
+可以通过\verb|\tiny|、\verb|\scriptsize|、\verb|\footnotesize|、\verb|\small|、\verb|\normalsize|、\verb|\large|、\verb|\Large|、\verb|\LARGE|、\verb|\huge|、\verb|\Huge|命令设置字体大小。
+
+\begin{latexexample}%
+正常字体
+
+\tiny{小号字体}
+
+\scriptsize{更小号字体}
+
+\footnotesize{脚注大小}
+
+\small{小号字体}
+
+\normalsize{正常大小}
+
+\large{大号字体}
+
+\Large{更大号字体}
+
+\LARGE{更大号字体}
+
+\huge{超大号字体}
+
+\Huge{超大号字体}
+\end{latexexample}
+
+
+\subsubsection{字体颜色和背景色}
+
+字体颜色可以通过\verb|\textcolor{}{}|命令设置。
+
+\begin{latexexample}%
+不加颜色
+
+\textcolor{red}{红色字体}
+
+\textcolor{blue}{蓝色字体}
+
+\textcolor{green}{绿色字体}
+
+\textcolor{orange}{橙色字体}
+
+\textcolor{purple}{紫色字体}
+
+\textcolor{cyan}{青色字体}
+
+\textcolor{yellow}{黄色字体}
+
+\textcolor{gray}{灰色字体}
+
+\textcolor{brown}{棕色字体}
+
+\textcolor{magenta}{品红色字体}
+
+\textcolor{olive}{橄榄色字体}
+
+\end{latexexample}
+
+颜色可以通过颜色代码来设置颜色，也可以使用RGB编码/十六进制颜色码。
+
+\begin{latexexample}%
+不加代码
+
+\textcolor{red}{红色字体}
+
+\textcolor[rgb]{1,0,0}{RGB颜色字体}
+
+\end{latexexample}
+
+背景色可以通过\verb|\colorbox{}{}|命令设置。
+
+\begin{latexexample}%
+不加颜色
+
+\colorbox{red}{红色背景}
+
+\colorbox{blue}{蓝色背景}
+
+\colorbox{green}{绿色背景}
+
+\colorbox{orange}{橙色背景}
+
+\colorbox{purple}{紫色背景}
+
+\colorbox{cyan}{青色背景}
+
+\colorbox{yellow}{黄色背景}
+
+\colorbox{gray}{灰色背景}
+
+\end{latexexample}
+
+
+
+
+\subsubsection{公式加框}
+
+可以使用\verb|\boxed{}|、\verb|\fbox{}|、\verb|\framebox{}|命令加框。
+
+其中\verb|boxed{}|是amsmath的数学模式命令，必须用\verb|$...$|包裹。
+
+\begin{latexexample}%
+$\boxed{\text{我是加框的文字1}}$
+
+\fbox{我是加框的文字2}
+
+\framebox{我是加框的文字3}
+\end{latexexample}
+
+
+
+\subsubsection{特殊符号的输入}
+
+\LaTeX 中,一般字符可以被正常输入\par
+而一些字符如\verb|&|、\verb|#|、\verb|%|、\verb|{ }|、\verb|_|、\verb|^|、\verb|~|、\verb|\|等在LaTeX中有特殊的意义，如果需要输入它们本身，需要使用转义字符\verb|\|。
+
+\begin{latexexample}%
+输出如下：
+\&
+\#
+\%
+\{ \}
+\_
+\^{}
+\~{}
+\textbackslash
+\end{latexexample}
+
+以上代码分别输出：\& \# \% \{ \} \_ \^{} \~{} \textbackslash
+
+\subsubsection{水平间距}
+
+\LaTeX{} 中，可以使用\verb|\hspace{}|命令来加入空格并设置水平间距。\par
+单位有cm、mm、pt、ex、em、in等，含义如下：
+
+\begin{itemize}
+    \item cm：厘米
+    \item mm：毫米
+    \item pt：磅
+    \item ex：字体大小
+    \item em：字体大小
+    \item in：英寸
+\end{itemize}
+
+\begin{latexexample}%
+水平距离为1cm\hspace{1cm}的间距。
+
+水平距离为1mm\hspace{1mm}的间距。
+
+水平距离为1pt\hspace{1pt}的间距。
+
+水平距离为1ex\hspace{1ex}的间距。
+
+水平距离为1em\hspace{1em}的间距。
+
+水平距离为1in\hspace{1in}的间距。
+
+\end{latexexample}
+
+同样的，还可以配合下划线命令\verb|\underline{}|来显示空格的效果：\par
+\begin{latexexample}%
+水平距离为1cm\underline{\hspace{1cm}}的间距。
+
+水平距离为1mm\underline{\hspace{1mm}}的间距。
+
+水平距离为1pt\underline{\hspace{1pt}}的间距。
+
+水平距离为1ex\underline{\hspace{1ex}}的间距。
+
+水平距离为1em\underline{\hspace{1em}}的间距。
+
+水平距离为1in\underline{\hspace{1in}}的间距。
+
+\end{latexexample}
+
+\subsubsection{列表环境}
+
+\LaTeX 中提供了多种列表环境，包括无序列表、有序列表和描述列表。
+
+无序列表使用\verb|itemize|环境：
+
+\begin{minted}[frame=single]{latex}
+\begin{itemize}
+\item 无序列表项
+\item 无序列表项
+\item 无序列表项
+\end{itemize}
+\end{minted}
+
+效果如下：
+\begin{itemize}
+\item 无序列表项
+\item 无序列表项
+\item 无序列表项
+\end{itemize}
+
+有序列表使用\verb|enumerate|环境：
+
+\begin{minted}[frame=single]{latex}
+\begin{enumerate}
+\item 有序列表项
+\item 有序列表项
+\item 有序列表项
+\end{enumerate}
+\end{minted}
+
+效果如下：
+\begin{enumerate}
+\item 有序列表项
+\item 有序列表项
+\item 有序列表项
+\end{enumerate}
+
+描述列表使用\verb|description|环境：
+
+\begin{minted}[frame=single]{latex}
+\begin{description}
+\item[描述列表项1] 描述列表项1的内容。
+\item[描述列表项2] 描述列表项2的内容。
+\item[描述列表项3] 描述列表项3的内容。
+\end{description}
+\end{minted}
+
+效果如下：
+\begin{description}
+\item[描述列表项1] 描述列表项1的内容。
+\item[描述列表项2] 描述列表项2的内容。
+\item[描述列表项3] 描述列表项3的内容。
+\end{description}
+
+
+
+
+\subsection{数学输入}
+
+\subsubsection{基本元素}
+
+\paragraph{希腊字母}\mbox{}
+
+希腊字母可以通过反斜杠加字母名称输入。
+
+\begin{table}[H]
+\centering
+\caption{小写希腊字母}
+\begin{tabular}{cc|cc|cc}
+\hline
+代码 & 输出 & 代码 & 输出 & 代码 & 输出 \\
+\hline
+\verb|$\alpha$|   & $\alpha$   & \verb|$\iota$|    & $\iota$    & \verb|$\sigma$|   & $\sigma$   \\
+\verb|$\beta$|    & $\beta$    & \verb|$\kappa$|   & $\kappa$   & \verb|$\tau$|     & $\tau$     \\
+\verb|$\gamma$|   & $\gamma$   & \verb|$\lambda$|  & $\lambda$  & \verb|$\upsilon$| & $\upsilon$ \\
+\verb|$\delta$|   & $\delta$   & \verb|$\mu$|      & $\mu$      & \verb|$\phi$|     & $\phi$     \\
+\verb|$\epsilon$| & $\epsilon$ & \verb|$\nu$|      & $\nu$      & \verb|$\chi$|     & $\chi$     \\
+\verb|$\zeta$|    & $\zeta$    & \verb|$\xi$|      & $\xi$      & \verb|$\psi$|     & $\psi$     \\
+\verb|$\eta$|     & $\eta$     & \verb|$\pi$|      & $\pi$      & \verb|$\omega$|   & $\omega$   \\
+\verb|$\theta$|   & $\theta$   & \verb|$\rho$|     & $\rho$     &                    &            \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{大写希腊字母}
+\begin{tabular}{cc|cc|cc}
+\hline
+代码 & 输出 & 代码 & 输出 & 代码 & 输出 \\
+\hline
+\verb|$\Gamma$|   & $\Gamma$   & \verb|$\Xi$|    & $\Xi$    & \verb|$\Phi$|   & $\Phi$   \\
+\verb|$\Delta$|   & $\Delta$   & \verb|$\Pi$|    & $\Pi$    & \verb|$\Psi$|   & $\Psi$   \\
+\verb|$\Theta$|   & $\Theta$   & \verb|$\Sigma$| & $\Sigma$ & \verb|$\Omega$| & $\Omega$ \\
+\verb|$\Lambda$|  & $\Lambda$  & \verb|$\Upsilon$| & $\Upsilon$ &               &          \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{希腊字母变体}
+\begin{tabular}{cc|cc}
+\hline
+代码 & 输出 & 代码 & 输出 \\
+\hline
+\verb|$\varepsilon$| & $\varepsilon$ & \verb|$\varrho$|    & $\varrho$    \\
+\verb|$\vartheta$|  & $\vartheta$  & \verb|$\varsigma$|  & $\varsigma$  \\
+\verb|$\varpi$|     & $\varpi$     & \verb|$\varphi$|    & $\varphi$    \\
+\hline
+\end{tabular}
+\end{table}
+
+
+\paragraph{上标和下标}\mbox{}
+
+指数或者上标可以通过\verb|^|来输入；
+下标可以通过\verb|_|来输入。
+
+上标和下标默认只能作用于一个字符；
+如果需要作用于多个字符，可以使用大括号\verb|{}|来包含多于一个字符的内容。
+
+\begin{latexexample}%
+$a^2$
+
+$a_2$
+
+$a^22$
+
+$a^{22}$
+
+$a_22$
+
+$a_{22}$
+
+\end{latexexample}
+
+\paragraph{分数和根式}\mbox{}
+
+分数可以通过\verb|\frac{}{}|来输入。
+
+\begin{latexexample}%
+$\frac{a+b}{c+d}$
+\end{latexexample}
+
+根式可以通过\verb|\sqrt[]{}|来输入。
+
+\begin{latexexample}%
+$\sqrt[1]{2}$
+\end{latexexample}
+
+\paragraph{运算符}\mbox{}
+
+常用的运算符有：\verb|+|、\verb|-|、\verb|\times|、\verb|\div|、\verb|\pm|、\verb|\mp|、\verb|\cdot|等。
+
+\begin{latexexample}%
+$a+b$
+
+$a-b$
+
+$a\times b$
+
+$a\div b$
+
+$a\pm b$
+
+$a\mp b$
+
+$a\cdot b$
+\end{latexexample}
+
+
+
+\end{document}

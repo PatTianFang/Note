@@ -1,0 +1,23 @@
+\section{PPO}
+
+PPO 使用新旧策略概率比：
+\[
+  \rho_t(\params)=
+  \frac{\policy_{\params}(a_t\mid s_t)}
+       {\policy_{\oldparams}(a_t\mid s_t)}.
+\]
+
+裁剪目标：
+\[
+  L^{\mathrm{CLIP}}(\params)=
+  \E_t\left[
+    \min\left(
+      \rho_t(\params)\hat{A}_t,
+      \operatorname{clip}(\rho_t(\params),1-\epsilon,1+\epsilon)\hat{A}_t
+    \right)
+  \right].
+\]
+
+\begin{keybox}
+PPO 的核心直觉是限制单次策略更新幅度，使新策略不要过度偏离采样数据对应的旧策略。
+\end{keybox}

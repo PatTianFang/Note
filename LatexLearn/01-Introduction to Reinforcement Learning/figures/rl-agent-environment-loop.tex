@@ -1,0 +1,52 @@
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+    x=1.16cm,
+    y=1.08cm,
+    >=Latex,
+    font=\small,
+    block/.style={
+      draw=black,
+      line width=0.9pt,
+      rounded corners=6pt,
+      align=center,
+      fill=white
+    },
+    flow/.style={
+      draw=black,
+      line width=0.9pt,
+      -Latex,
+      line cap=round,
+      line join=round
+    },
+    timecut/.style={draw=black, dashed, line width=0.35pt},
+    label/.style={font=\small, align=center}
+  ]
+    \node[block, minimum width=1.95cm, minimum height=0.76cm] (agent) at (4.85,3.30) {智能体};
+    \node[block, minimum width=3.40cm, minimum height=0.76cm] (env) at (4.85,0.85) {环境};
+
+    \coordinate (stateIn) at ($(agent.west)+(0,0.16)$);
+    \coordinate (rewardIn) at ($(agent.west)+(0,-0.16)$);
+    \coordinate (envRewardOut) at ($(env.west)+(0,0.20)$);
+    \coordinate (envStateOut) at ($(env.west)+(0,-0.20)$);
+    \coordinate (timeReward) at (2.45,1.05);
+    \coordinate (timeState) at (2.45,0.65);
+
+    \draw[flow] (timeState) -- (1.00,0.65) -- (1.00,3.46) -- (stateIn);
+    \node[label, anchor=east] at (0.78,2.12) {状态\\$S_t$};
+
+    \draw[flow] (timeReward) -- (1.45,1.05) -- (1.45,3.14) -- (rewardIn);
+    \node[label, anchor=west] at (1.65,2.10) {奖励\\$R_t$};
+
+    \draw[flow] (agent.east) -- (7.55,3.30) -- (7.55,0.85) -- (env.east);
+    \node[label, anchor=west] at (7.77,2.10) {动作\\$A_t$};
+
+    \draw[flow] (envRewardOut) -- (timeReward);
+    \draw[flow] (envStateOut) -- (timeState);
+    \draw[timecut] (2.45,0.24) -- (2.45,1.46);
+    \node[label, anchor=west] at (2.56,1.28) {$R_{t+1}$};
+    \node[label, anchor=west] at (2.56,0.42) {$S_{t+1}$};
+  \end{tikzpicture}
+  \caption{强化学习中智能体与环境的交互过程}
+  \label{fig:rl-agent-environment-loop}
+\end{figure}

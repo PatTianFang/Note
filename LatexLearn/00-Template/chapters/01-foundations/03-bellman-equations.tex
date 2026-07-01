@@ -1,0 +1,20 @@
+\section{Bellman 方程}
+
+Bellman 期望方程：
+\[
+  \valuefn(s)=
+  \sum_a \policy(a\mid s)
+  \sum_{s'} \transition(s'\mid s,a)
+  \left[\reward(s,a)+\discount\valuefn(s')\right].
+\]
+
+Bellman 最优方程：
+\[
+  V^*(s)=
+  \max_a \sum_{s'} \transition(s'\mid s,a)
+  \left[\reward(s,a)+\discount V^*(s')\right].
+\]
+
+\begin{questionbox}
+当前问题是否满足马尔可夫性？如果状态只包含观测而不是完整系统状态，需要考虑 POMDP、历史窗口或循环网络。
+\end{questionbox}

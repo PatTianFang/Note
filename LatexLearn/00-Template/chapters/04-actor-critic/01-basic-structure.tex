@@ -1,0 +1,15 @@
+\section{基本结构}
+
+Actor 学习策略 $\policy_{\params}(a\mid s)$，Critic 学习值函数 $V_{\phi}(s)$ 或 $Q_{\phi}(s,a)$。TD 误差为
+\[
+  \tdelta_t=r_t+\discount V_{\phi}(s_{t+1})-V_{\phi}(s_t).
+\]
+
+Actor 的更新方向可写作
+\[
+  \nabla_{\params}J(\params)
+  \approx
+  \E\left[
+    \nabla_{\params}\log\policy_{\params}(a_t\mid s_t)\tdelta_t
+  \right].
+\]

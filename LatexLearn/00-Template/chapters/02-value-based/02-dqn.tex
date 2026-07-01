@@ -1,0 +1,34 @@
+\section{DQN}
+
+DQN 使用神经网络 $Q_{\params}(s,a)$ 近似动作值函数，并引入经验回放和目标网络。目标值为
+\[
+  \tdtarget=r+\discount\max_{a'}Q_{\params^-}(s',a').
+\]
+
+损失函数：
+\[
+  L(\params)=
+  \E_{(s,a,r,s')\sim\replay}
+  \left[
+    \left(\tdtarget-Q_{\params}(s,a)\right)^2
+  \right].
+\]
+
+\begin{algorithm}[H]
+  \caption{DQN 训练流程}
+  \KwInput{环境 env，回放池容量 $N$，目标网络更新间隔 $C$}
+  \KwOutput{动作值网络 $Q_{\params}$}
+  \KwInit{$Q_{\params}$，目标网络 $Q_{\params^-}\leftarrow Q_{\params}$，回放池 $\replay$}
+  \For{每个 episode}{
+    初始化状态 $s$\;
+    \For{每个 step}{
+      用 $\epsilon$-greedy 根据 $Q_{\params}$ 选择动作 $a$\;
+      执行动作得到 $r,s'$\;
+      将 $(s,a,r,s')$ 存入 $\replay$\;
+      从 $\replay$ 采样 mini-batch\;
+      计算 $\tdtarget=r+\discount\max_{a'}Q_{\params^-}(s',a')$\;
+      最小化 $\left(\tdtarget-Q_{\params}(s,a)\right)^2$\;
+      每隔 $C$ 步令 $\params^-\leftarrow\params$\;
+    }
+  }
+\end{algorithm}

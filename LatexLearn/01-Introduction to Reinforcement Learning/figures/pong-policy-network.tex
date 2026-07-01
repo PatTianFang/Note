@@ -1,0 +1,64 @@
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+    x=1cm,
+    y=1cm,
+    >=Stealth,
+    font=\small,
+    label/.style={font=\small},
+    arrow/.style={
+      draw=noteBlue,
+      line width=1.1pt,
+      -Stealth
+    },
+    pixframe/.style={
+      draw=black!65,
+      very thick,
+      fill=brown!70!black
+    },
+    policybox/.style={
+      draw=black,
+      line width=1.0pt,
+      rounded corners=4pt,
+      fill=noteBlue,
+      minimum width=2.65cm,
+      minimum height=1.22cm,
+      align=center
+    }
+  ]
+    \begin{scope}[shift={(1.65,1.70)}]
+      \node[pixframe, minimum width=3.30cm, minimum height=3.30cm] (screen) at (0,0) {};
+
+      \draw[orange!45, line width=1.25pt]
+        (-0.72,1.13) rectangle (-0.56,1.48);
+      \draw[green!60!black, line width=1.25pt]
+        (0.72,1.13) rectangle (0.88,1.48);
+
+      \draw[white, line width=5.0pt]
+        ([yshift=-0.76cm]screen.north west) --
+        ([yshift=-0.76cm]screen.north east);
+
+      \fill[orange!20]
+        ([xshift=-1.22cm,yshift=-0.98cm]screen.center) rectangle ++(0.11,0.42);
+      \fill[green!55!black]
+        ([xshift=1.18cm,yshift=-1.36cm]screen.center) rectangle ++(0.11,0.42);
+      \fill[white]
+        ([xshift=-0.05cm,yshift=-0.18cm]screen.center) rectangle ++(0.045,0.045);
+
+      \node[label, anchor=south] at ([yshift=7pt]screen.north) {原始像素};
+    \end{scope}
+
+    \draw[arrow] (3.55,1.70) -- (4.65,1.70);
+    \node[label, anchor=south] at (4.10,1.82) {输入};
+
+    \node[policybox] (policy) at (6.20,1.70) {\color{white}策略网络};
+
+    \draw[arrow] (7.70,1.70) -- (8.78,1.70);
+    \node[label, anchor=south] at (8.24,1.82) {输出};
+
+    \node[label, align=left, anchor=west] at (9.00,1.88)
+      {上升或下降\\的概率};
+  \end{tikzpicture}
+  \caption{策略网络根据 Pong 原始像素输出上升或下降的概率}
+  \label{fig:pong-policy-network}
+\end{figure}
